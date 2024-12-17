@@ -11,6 +11,11 @@ namespace lab7
     {
         private readonly List<Restaurant> _restaurants;
 
+        public List<Restaurant> GetRestaurants()
+        {
+            return _restaurants;
+        }
+
         public ReservationManager()
         {
             _restaurants = new List<Restaurant>();
@@ -28,10 +33,32 @@ namespace lab7
             _restaurants.Add(restaurant);
         }
 
-        public List<Restaurant> GetRestaurants()
+        public bool BookTable(string restaurantName, DateTime date, int tableNumber)
         {
-            return _restaurants;
+            var restaurant = _restaurants.Find(r => r.Name.Equals(restaurantName, StringComparison.OrdinalIgnoreCase));
+
+            if (restaurant == null)
+            {
+                Console.WriteLine("Restaurant not found.");
+                return false;
+            }
+
+            return restaurant.BookTable(date, tableNumber);
         }
+
+        public List<string> FindAllFreeTables(DateTime date)
+        {
+            var freeTables = new List<string>();
+
+            foreach (var restaurant in _restaurants)
+            {
+                freeTables.AddRange(restaurant.GetFreeTables(date));
+            }
+
+            return freeTables;
+        }
+
+        
 
         
     }

@@ -22,6 +22,21 @@ namespace lab7
             }
         }
 
+        public int GetAvailableTableCount(DateTime date)
+        {
+            int count = 0;
+
+            foreach (var table in _tables)
+            {
+                if (!table.IsBooked(date))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
         public List<string> GetFreeTables(DateTime date)
         {
             var freeTables = new List<string>();
@@ -61,9 +76,7 @@ namespace lab7
             }
 
             return bookedDetails;
-        }
-
-        
+        }       
     }
 
 }
